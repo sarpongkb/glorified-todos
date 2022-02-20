@@ -1,9 +1,11 @@
 package com.sarpongkb.sbtodo.todo;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.GenerationType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +20,9 @@ public class TodoItem {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
-  private Long listId;
+  @ManyToOne
+  @JoinColumn(name = "fk_list_id")
+  private TodoList todoList;
 
   private String description;
 

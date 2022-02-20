@@ -1,6 +1,7 @@
 package com.sarpongkb.sbtodo.todo;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TodoListServiceImpl implements TodoListService {
@@ -28,4 +29,13 @@ public class TodoListServiceImpl implements TodoListService {
     todoListRepository.deleteById(id);
     return true;
   }
+
+  @Transactional
+  @Override
+  public void createTodoItem(Long id, TodoItem todoItem) {
+    var todoList = todoListRepository.findById(id).orElseThrow();
+    todoList.addTodoItem(todoItem);
+    todoListRepository.save(todoList);
+  }
+ 
 }

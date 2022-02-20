@@ -5,11 +5,12 @@ import java.util.Map;
 
 import com.sarpongkb.sbtodo.util.Response;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,13 +23,26 @@ public class TodoListController {
   }
 
   @PostMapping("")
-  public ResponseEntity<Response> createTodoList(@RequestBody TodoList todoDto) {
+  public ResponseEntity<Response> createTodoList(@RequestBody TodoList listDto) {
     return ResponseEntity.ok(
         Response.builder()
             .timeStamp(LocalDateTime.now())
             .status(HttpStatus.CREATED)
             .statusCode(HttpStatus.CREATED.value())
-            .data(Map.of("todoList", todoListService.create(todoDto.getName())))
+            .data(Map.of("todoList", todoListService.create(listDto.getName())))
+            .build());
+  }
+
+  @PostMapping("/{id}")
+  public ResponseEntity<Response> createTodoListItem(@PathVariable Long id, @RequestBody TodoItemDto itemDto) {
+    todoListService.createTodoItem(id, TodoManager.fromTodoItemDto(itemDto));
+  
+    return ResponseEntity.ok(
+        Response.builder()
+            .timeStamp(LocalDateTime.now())
+            .status(HttpStatus.CREATED)
+            .statusCode(HttpStatus.CREATED.value())
+            // .data(Map.of("todoList", todoListService.create(todoDto.getName())))
             .build());
   }
 }

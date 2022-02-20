@@ -6,4 +6,6 @@ public interface TodoListService {
   TodoList get(Long id);
 
   Boolean delete(Long id);
+
+  void createTodoItem(Long id, TodoItem todoItem);
 }
