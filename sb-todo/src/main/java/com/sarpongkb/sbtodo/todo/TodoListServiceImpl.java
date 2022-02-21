@@ -7,9 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class TodoListServiceImpl implements TodoListService {
 
   private TodoListRepository todoListRepository;
+  private TodoItemRepository todoItemRepository;
 
-  public TodoListServiceImpl(TodoListRepository todoListRepository) {
+  public TodoListServiceImpl(TodoListRepository todoListRepository, TodoItemRepository todoItemRepository) {
     this.todoListRepository = todoListRepository;
+    this.todoItemRepository = todoItemRepository;
   }
 
   @Override
@@ -32,10 +34,10 @@ public class TodoListServiceImpl implements TodoListService {
 
   @Transactional
   @Override
-  public void createTodoItem(Long id, TodoItem todoItem) {
+  public TodoItem createTodoItem(Long id, TodoItem todoItem) {
     var todoList = todoListRepository.findById(id).orElseThrow();
     todoList.addTodoItem(todoItem);
-    todoListRepository.save(todoList);
+    return todoItemRepository.save(todoItem);
   }
  
 }

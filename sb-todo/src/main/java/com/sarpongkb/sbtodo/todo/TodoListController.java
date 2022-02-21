@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/todo-list")
 public class TodoListController {
   private TodoListService todoListService;
+  private TodoManager todoManager;
 
-  public TodoListController(TodoListService todoListService) {
+  public TodoListController(TodoListService todoListService, TodoManager todoManager) {
     this.todoListService = todoListService;
+    this.todoManager = todoManager;
   }
 
   @PostMapping("")
@@ -34,15 +36,15 @@ public class TodoListController {
   }
 
   @PostMapping("/{id}")
-  public ResponseEntity<Response> createTodoListItem(@PathVariable Long id, @RequestBody TodoItemDto itemDto) {
-    todoListService.createTodoItem(id, TodoManager.fromTodoItemDto(itemDto));
+  public ResponseEntity<Response> createTodoItem(@PathVariable Long id, @RequestBody TodoItemDto itemDto) {
+    var todoItem = todoListService.createTodoItem(id, todoManager.fromTodoItemDto(itemDto));
   
     return ResponseEntity.ok(
         Response.builder()
             .timeStamp(LocalDateTime.now())
             .status(HttpStatus.CREATED)
             .statusCode(HttpStatus.CREATED.value())
-            // .data(Map.of("todoList", todoListService.create(todoDto.getName())))
+            .data(Map.of("todoItem", todoManager.toTodoItemDto(todoItem)))
             .build());
   }
 }

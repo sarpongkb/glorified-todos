@@ -1,8 +1,11 @@
 package com.sarpongkb.sbtodo.todo;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class TodoManager {
 
-  public static TodoItem fromTodoItemDto(TodoItemDto dto) {
+  public TodoItem fromTodoItemDto(TodoItemDto dto) {
     var todoItem = new TodoItem();
     todoItem.setId(dto.getId());
     todoItem.setCompleted(dto.getCompleted());
@@ -10,7 +13,7 @@ public class TodoManager {
     return todoItem;
   }
 
-  public static TodoItemDto toTodoItemDto(TodoItem item) {
+  public TodoItemDto toTodoItemDto(TodoItem item) {
     var dto = new TodoItemDto();
     dto.setCompleted(item.getCompleted());
     dto.setDescription(item.getDescription());

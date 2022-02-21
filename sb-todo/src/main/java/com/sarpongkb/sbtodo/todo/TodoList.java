@@ -32,4 +32,8 @@ public class TodoList {
     this.todoItems.add(todoItem);
     todoItem.setTodoList(this);
   }
+
+  TodoItem getTodoItem(Long itemId) {
+    return todoItems.stream().filter(item -> item.getId().equals(itemId)).findAny().get();
+  }
 }
