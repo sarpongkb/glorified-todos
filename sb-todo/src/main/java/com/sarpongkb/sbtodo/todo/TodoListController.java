@@ -38,6 +38,19 @@ public class TodoListController {
       .build());
   }
 
+  @GetMapping("/{id}")
+  public ResponseEntity<Response> getTodoList(@PathVariable Long id) {
+    var todoList = todoListService.get(id);
+
+    return ResponseEntity.ok(
+      Response.builder()
+      .timeStamp(LocalDateTime.now())
+      .status(HttpStatus.OK)
+      .statusCode(HttpStatus.OK.value())
+      .data(Map.of("todoList", todoManager.toTodoListDto(todoList)))
+      .build()); 
+  }
+
   @PostMapping("")
   public ResponseEntity<Response> createTodoList(@RequestBody TodoListDto listDto) {
     var todoList = todoListService.create(todoManager.fromTodoListDto(listDto));
