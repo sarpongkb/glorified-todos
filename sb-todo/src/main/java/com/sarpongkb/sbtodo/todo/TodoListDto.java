@@ -1,5 +1,7 @@
 package com.sarpongkb.sbtodo.todo;
 
+import java.util.List;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
@@ -11,9 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
-public class TodoItemDto {
+public class TodoListDto {
   private Long id;
-  private Long listId;
-  private String description;
-  private Boolean completed;
+  private String name;
+  private List<TodoItemDto> todoItems;
 }

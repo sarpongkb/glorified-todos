@@ -1,7 +1,7 @@
 package com.sarpongkb.sbtodo.todo;
 
 public interface TodoListService {
-  TodoList create(String name);
+  TodoList create(TodoList todoList);
 
   TodoList get(Long id);
 

@@ -25,17 +25,19 @@ public class TodoListController {
   }
 
   @PostMapping("")
-  public ResponseEntity<Response> createTodoList(@RequestBody TodoList listDto) {
+  public ResponseEntity<Response> createTodoList(@RequestBody TodoListDto listDto) {
+    var todoList = todoListService.create(todoManager.fromTodoListDto(listDto));
+
     return ResponseEntity.ok(
         Response.builder()
             .timeStamp(LocalDateTime.now())
             .status(HttpStatus.CREATED)
             .statusCode(HttpStatus.CREATED.value())
-            .data(Map.of("todoList", todoListService.create(listDto.getName())))
+            .data(Map.of("todoList", todoManager.toTodoListDto(todoList)))
             .build());
   }
 
-  @PostMapping("/{id}")
+  @PostMapping("/{id}/todo-item")
   public ResponseEntity<Response> createTodoItem(@PathVariable Long id, @RequestBody TodoItemDto itemDto) {
     var todoItem = todoListService.createTodoItem(id, todoManager.fromTodoItemDto(itemDto));
   
