@@ -7,6 +7,7 @@ import com.sarpongkb.sbtodo.util.Response;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +23,19 @@ public class TodoListController {
   public TodoListController(TodoListService todoListService, TodoManager todoManager) {
     this.todoListService = todoListService;
     this.todoManager = todoManager;
+  }
+
+  @GetMapping("")
+  public ResponseEntity<Response> getAllTodoLists() {
+    var todoLists = todoListService.getAll();
+
+    return ResponseEntity.ok(
+      Response.builder()
+      .timeStamp(LocalDateTime.now())
+      .status(HttpStatus.OK)
+      .statusCode(HttpStatus.OK.value())
+      .data(Map.of("todoLists", todoManager.toTodoListsDto(todoLists)))
+      .build());
   }
 
   @PostMapping("")

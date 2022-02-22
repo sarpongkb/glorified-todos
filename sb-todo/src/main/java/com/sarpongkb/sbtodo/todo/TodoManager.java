@@ -1,6 +1,5 @@
 package com.sarpongkb.sbtodo.todo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -23,18 +22,18 @@ class TodoManager {
     return dto;
   }
 
+  List<TodoListDto> toTodoListsDto(List<TodoList> todoLists) {
+    return todoLists.stream()
+      .map(this::toTodoListDto)
+      .toList();
+  }
+
   TodoItem fromTodoItemDto(TodoItemDto dto) {
     var todoItem = new TodoItem();
     todoItem.setId(dto.getId());
     todoItem.setCompleted(dto.getCompleted());
     todoItem.setDescription(dto.getDescription());
     return todoItem;
-  }
-
-  List<TodoItem> fromTodoItemsDto(List<TodoItemDto> dtos) {
-    var todoItems = new ArrayList<TodoItem>();
-    dtos.forEach(dto -> todoItems.add(fromTodoItemDto(dto)));
-    return todoItems;
   }
 
   TodoItemDto toTodoItemDto(TodoItem todoItem) {
@@ -47,9 +46,9 @@ class TodoManager {
   }
 
   List<TodoItemDto> toTodoItemsDto(List<TodoItem> todoItems) {
-    var dtos = new ArrayList<TodoItemDto>();
-    todoItems.forEach(item -> dtos.add(toTodoItemDto(item)));
-    return dtos;
+    return todoItems.stream()
+      .map(this::toTodoItemDto)
+      .toList();
   }
 
 }
