@@ -33,6 +33,13 @@ class TodoManager {
     todoItem.setId(dto.getId());
     todoItem.setCompleted(dto.getCompleted());
     todoItem.setDescription(dto.getDescription());
+
+    if (dto.getListId() != null) {
+      var todoList = new TodoList();
+      todoList.setId(dto.getListId());
+      todoItem.setTodoList(todoList);
+    }
+
     return todoItem;
   }
 
